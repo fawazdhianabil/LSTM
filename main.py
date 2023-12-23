@@ -361,12 +361,12 @@ def main():
                     st.write("\n Counting SVM Accuracy...")
                     
                     def score_sentiment(score):
-                        if score == 'positive':
-                            return 0
-                        elif score == 'negative':
-                            return -1
-                        else:
+                        if score == 'neutral':
                             return 1
+                        elif score == 'negative':
+                            return 0
+                        elif score == 'positive':
+                            return 2
 
                     biner = df['sentiment'].apply(score_sentiment)    
 
@@ -419,7 +419,7 @@ def main():
                     padded_sequences = pad_sequences(sequences, maxlen=max_words)
 
                     # Labeling
-                    polarity_encode = {'negative' : 0, 'neutral' : -1, 'positive' : 1}
+                    polarity_encode = {'negative' : 0, 'neutral' : 1, 'positive' : 2}
                     labels = df['sentiment'].map(polarity_encode).values
             
                     X_train, X_test, Y_train, Y_test = train_test_split(padded_sequences, labels, test_size=0.2, random_state=42)
