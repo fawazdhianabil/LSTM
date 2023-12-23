@@ -85,7 +85,7 @@ def main():
             data_file = st.file_uploader("Upload CSV file",type=["csv"])            
             if data_file is not None :
                 df = pd.read_csv(data_file)
-                df = df[:100]
+                df = df[:15]
                 st.dataframe(df)
 
                 proses = st.button('Start process')
@@ -396,11 +396,9 @@ def main():
                     def create_lstm_model(max_words, embedding_dim, input_length):
                         model = Sequential()
                         model.add(Embedding(max_words, embedding_dim, input_length=input_length))
-                        model.add(SpatialDropout1D(0.2))
-                        model.add(LSTM(100))
-                        model.add(Dense(1, activation='sigmoid'))
-    
-                        model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+                        model.add(LSTM(100, activation='tanh'))
+                        model.add(Dense(units = 3, activation = 'softmax'))
+                        model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
                         return model
 
 
