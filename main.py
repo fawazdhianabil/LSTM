@@ -401,12 +401,20 @@ def main():
                         model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
                         return model
 
+                    def create_model(embed_dim = 16, hidden_unit = 16, dropout_rate = 0.2, optimizers = Adam, learning_rate = 0.001):
+                        model = Sequential()
+                        model.add(Embedding(input_dim = max_features, output_dim = embed_dim, input_length = X_train.shape[1]))
+                        model.add(LSTM(units = hidden_unit, activation = 'tanh'))
+                        model.add(Dropout(dropout_rate))
+                        model.add(Dense(units = 3, activation = 'softmax'))
+                        model.compile(loss = 'sparse_categorical_crossentropy', optimizer = optimizers(lr = learning_rate), metrics = ['accuracy'])
+                        return model
 
                     # Tokenize text
                     max_words = 5000
-                    tokenizer = Tokenizer(num_words=max_words, oov_token="<OOV>")
+                    tokenizer = Tokenizer(num_words=max_words, split=' ')
                     tokenizer.fit_on_texts(df['text_clean'])
-                    sequences = tokenizer.texts_to_sequences(df['text_clean'])
+                    sequences = tokenizer.texts_to_sequences(df['text_clean')
                     padded_sequences = pad_sequences(sequences, maxlen=max_words)
 
                     # Labeling
@@ -415,9 +423,9 @@ def main():
                     X_train, X_test, Y_train, Y_test = train_test_split(padded_sequences, labels, test_size=0.2, random_state=42)
 
                     # Create and train the LSTM model
-                    embedding_dim = 100
-                    input_length = max_words
-                    lstm_model = create_lstm_model(max_words, embedding_dim, input_length)
+                    #embedding_dim = 100
+                    #input_length = max_words
+                    lstm_model = create_model()
                     lstm_model.fit(X_train, Y_train, epochs=5, validation_data=(X_test, Y_test), batch_size=32)
 
                     # Evaluate the model
