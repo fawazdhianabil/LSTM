@@ -432,7 +432,9 @@ def main():
 
                     # Evaluate the model
                     predictions = lstm_model.predict(X_test)
-                    predicted_labels = predictions
+                    predicted_labels = np.argmax(predictions, axis=1)
+                    st.write(predictions)
+                    st.write(predicted_labels)
                     true_labels = Y_test
 
                     st.write("LSTM Accuracy score  -> ", accuracy_score(true_labels, predicted_labels)*100)
