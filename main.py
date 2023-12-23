@@ -419,7 +419,8 @@ def main():
                     padded_sequences = pad_sequences(sequences, maxlen=max_words)
 
                     # Labeling
-                    labels = pd.get_dummies(df['sentiment'])
+                    polarity_encode = {'negative' : 0, 'neutral' : -1, 'positive' : 1}
+                    labels = df['sentiment'].map(polarity_encode).values
             
                     X_train, X_test, Y_train, Y_test = train_test_split(padded_sequences, labels, test_size=0.2, random_state=42)
 
