@@ -86,7 +86,7 @@ def main():
             data_file = st.file_uploader("Upload CSV file",type=["csv"])            
             if data_file is not None :
                 df = pd.read_csv(data_file)
-                df = df[:50]
+                df = df[:15]
                 st.dataframe(df)
 
                 proses = st.button('Start process')
