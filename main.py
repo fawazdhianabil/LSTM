@@ -86,7 +86,6 @@ def main():
             data_file = st.file_uploader("Upload CSV file",type=["csv"])            
             if data_file is not None :
                 df = pd.read_csv(data_file)
-                df = df[:30]
                 st.dataframe(df)
 
                 proses = st.button('Start process')
@@ -433,8 +432,6 @@ def main():
                     # Evaluate the model
                     predictions = lstm_model.predict(X_test)
                     predicted_labels = np.argmax(predictions, axis=1)
-                    st.write(predictions)
-                    st.write(predicted_labels)
                     true_labels = Y_test
 
                     st.write("LSTM Accuracy score  -> ", accuracy_score(true_labels, predicted_labels)*100)
