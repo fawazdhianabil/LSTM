@@ -402,9 +402,9 @@ def main():
                         model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
                         return model
 
-                    def create_model(embed_dim = 16, hidden_unit = 16, dropout_rate = 0.2, optimizers = Adam, learning_rate = 0.001):
+                    def create_model(max_words=5000, embed_dim = 16, hidden_unit = 16, dropout_rate = 0.2, optimizers = Adam, learning_rate = 0.001):
                         model = Sequential()
-                        model.add(Embedding(input_dim = max_features, output_dim = embed_dim, input_length = X_train.shape[1]))
+                        model.add(Embedding(input_dim = max_words, output_dim = embed_dim, input_length = X_train.shape[1]))
                         model.add(LSTM(units = hidden_unit, activation = 'tanh'))
                         model.add(Dropout(dropout_rate))
                         model.add(Dense(units = 3, activation = 'softmax'))
