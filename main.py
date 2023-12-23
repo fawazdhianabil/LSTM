@@ -414,7 +414,7 @@ def main():
                     max_words = 5000
                     tokenizer = Tokenizer(num_words=max_words, split=' ')
                     tokenizer.fit_on_texts(df['text_clean'])
-                    sequences = tokenizer.texts_to_sequences(df['text_clean')
+                    sequences = tokenizer.texts_to_sequences(df['text_clean'])
                     padded_sequences = pad_sequences(sequences, maxlen=max_words)
 
                     # Labeling
