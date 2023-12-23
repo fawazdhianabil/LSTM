@@ -25,6 +25,7 @@ from tensorflow.keras.layers import Embedding, LSTM, Dense, SpatialDropout1D
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.callbacks import EarlyStopping
+from keras.optimizers import Adam, RMSprop, SGD
 
 def main():
 
