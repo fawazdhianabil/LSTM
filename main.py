@@ -91,6 +91,7 @@ def main():
             data_file = st.file_uploader("Upload CSV file",type=["csv"])            
             if data_file is not None :
                 df = pd.read_csv(data_file)
+                df = df[:10]
                 st.dataframe(df)
 
                 proses = st.button('Start process')
@@ -209,11 +210,11 @@ def main():
                     st.caption("| normalization...")
                     df['tweet_normalized'] = df['text_tokenize'].apply(normalized_term)
 
-                    st.caption("| removal stopwords...")
-                    df['text_stopword'] = df['tweet_normalized'].apply(stopword)
+                    st.caption("| filtering...")
+                    df['text_filtering'] = df['tweet_normalized'].apply(stopword)
 
                     st.caption("| steamming...")
-                    df['text_steamming'] = df['text_stopword'].apply(steamming)
+                    df['text_steamming'] = df['text_filtering'].apply(steamming)
 
                     # Remove Puct 
                     df['text_clean'] = df['text_steamming'].apply(lambda x: remove_punct(x))
