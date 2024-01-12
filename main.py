@@ -408,12 +408,12 @@ def main():
                     predict = clfsvm.predict(X_test)
                     pred = []
                     for i in predict:
-                    if i == 1:
-                        pred.append('Neutral')
-                    elif i == 0:
-                        pred.append('Negative')
-                    elif i == 2:
-                        pred.append('Positive')
+                        if i == 1:
+                            pred.append('Neutral')
+                        elif i == 0:
+                            pred.append('Negative')
+                        elif i == 2:
+                            pred.append('Positive')
                     label = pd.DataFrame({'sentimen':pred})
                     values = label.sentimen.value_counts(ascending=True).keys().tolist()
                     counts = label.sentimen.value_counts(ascending=True).tolist()
@@ -486,12 +486,12 @@ def main():
                     true_labels = Y_test
                     pred = []
                     for i in predicted_labels:
-                    if i == 1:
-                        pred.append('Neutral')
-                    elif i == 0:
-                        pred.append('Negative')
-                    elif i == 2:
-                        pred.append('Positive')
+                        if i == 1:
+                            pred.append('Neutral')
+                        elif i == 0:
+                            pred.append('Negative')
+                        elif i == 2:
+                            pred.append('Positive')
                     label = pd.DataFrame({'sentimen':pred})
                     values = label.sentimen.value_counts(ascending=True).keys().tolist()
                     counts = label.sentimen.value_counts(ascending=True).tolist()
