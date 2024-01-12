@@ -406,7 +406,29 @@ def main():
                     clfsvm = svm.SVC(kernel="linear")
                     clfsvm.fit(X_train,Y_train)
                     predict = clfsvm.predict(X_test)
-
+                    pred = []
+                    for i in predict:
+                    if i == 0:
+                        pred.append('Neutral')
+                    elif i == -1:
+                        pred.append('Negative')
+                    elif i == 1:
+                        pred.append('Positive')
+                    label = pd.DataFrame({'sentimen':pred})
+                    values = label.sentimen.value_counts(ascending=True).keys().tolist()
+                    counts = label.sentimen.value_counts(ascending=True).tolist()
+                    #fig = plt.figure(figsize = (7, 5))
+                    c = []
+                    cc = ['blue','green','red']
+                    for i in range(len(values)):
+                        c.append(cc[i])
+                    fig, ax = plt.subplots()
+                    p = ax.bar(values, counts, width=0.6, label=values,color=c)    
+                    ax.bar_label(p, label_type='center')
+                    plt.xlabel("Sentimen",fontweight ='bold')
+                    plt.ylabel("Frekuensi",fontweight ='bold')
+                    ax.set_title("Hasil Klasifikasi SVM", fontweight ='bold', fontsize = 14)
+                    ax.legend()
                     st.write("SVM Accuracy score  -> ", accuracy_score(predict, Y_test)*100)
                     st.write("SVM Recall Score    -> ", recall_score(predict, Y_test, average='macro')*100)
                     st.write("SVM Precision score -> ", precision_score(predict, Y_test, average='macro')*100)
@@ -416,6 +438,7 @@ def main():
                     st.write("===========================================================")
                     st.text('classification report : \n'+ classification_report(predict, Y_test, zero_division=0))
                     st.write("===========================================================")
+                    st.write(fig)
 
                     # LSTM Model
                     st.write("========================================================================================")
@@ -461,6 +484,29 @@ def main():
                     predictions = lstm_model.predict(X_test)
                     predicted_labels = np.argmax(predictions, axis=1)
                     true_labels = Y_test
+                    pred = []
+                    for i in predicted_labels:
+                    if i == 0:
+                        pred.append('Neutral')
+                    elif i == -1:
+                        pred.append('Negative')
+                    elif i == 1:
+                        pred.append('Positive')
+                    label = pd.DataFrame({'sentimen':pred})
+                    values = label.sentimen.value_counts(ascending=True).keys().tolist()
+                    counts = label.sentimen.value_counts(ascending=True).tolist()
+                    #fig = plt.figure(figsize = (7, 5))
+                    c = []
+                    cc = ['blue','green','red']
+                    for i in range(len(values)):
+                        c.append(cc[i])
+                    fig, ax = plt.subplots()
+                    p = ax.bar(values, counts, width=0.6, label=values,color=c)    
+                    ax.bar_label(p, label_type='center')
+                    plt.xlabel("Sentimen",fontweight ='bold')
+                    plt.ylabel("Frekuensi",fontweight ='bold')
+                    ax.set_title("Hasil Klasifikasi SVM", fontweight ='bold', fontsize = 14)
+                    ax.legend()            
 
                     st.write("LSTM Accuracy score  -> ", accuracy_score(true_labels, predicted_labels)*100)
                     st.write("LSTM Recall Score    -> ", recall_score(true_labels, predicted_labels, average='macro')*100)
@@ -471,6 +517,7 @@ def main():
                     st.write("===========================================================")
                     st.text('classification report : \n' + classification_report(true_labels, predicted_labels, zero_division=0))
                     st.write("===========================================================")
+                    st.write(fig)
 
             # ... existing code ...
 
