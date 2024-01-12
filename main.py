@@ -419,7 +419,7 @@ def main():
                     counts = label.sentimen.value_counts(ascending=True).tolist()
                     #fig = plt.figure(figsize = (7, 5))
                     c = []
-                    cc = ['blue','green','red']
+                    cc = ['green','red','blue']
                     for i in range(len(values)):
                         c.append(cc[i])
                     fig, ax = plt.subplots()
@@ -497,7 +497,7 @@ def main():
                     counts = label.sentimen.value_counts(ascending=True).tolist()
                     #fig = plt.figure(figsize = (7, 5))
                     c = []
-                    cc = ['blue','green','red']
+                    cc = ['green','red','blue']
                     for i in range(len(values)):
                         c.append(cc[i])
                     fig, ax = plt.subplots()
