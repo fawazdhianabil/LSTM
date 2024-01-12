@@ -91,7 +91,6 @@ def main():
             data_file = st.file_uploader("Upload CSV file",type=["csv"])            
             if data_file is not None :
                 df = pd.read_csv(data_file)
-                df = df[:100]
                 st.dataframe(df)
 
                 proses = st.button('Start process')
@@ -506,7 +505,7 @@ def main():
                     ax.bar_label(p, label_type='center')
                     plt.xlabel("Sentimen",fontweight ='bold')
                     plt.ylabel("Frekuensi",fontweight ='bold')
-                    ax.set_title("Hasil Klasifikasi SVM", fontweight ='bold', fontsize = 14)
+                    ax.set_title("Hasil Klasifikasi LSTM", fontweight ='bold', fontsize = 14)
                     ax.legend()            
 
                     st.write("LSTM Accuracy score  -> ", accuracy_score(true_labels, predicted_labels)*100)
