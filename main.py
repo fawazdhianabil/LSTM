@@ -27,6 +27,11 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.callbacks import EarlyStopping
 from keras.optimizers import Adam, RMSprop, SGD
 
+import csv
+import sys
+import unicodedata
+
+
 def main():
 
     # make sidebar
@@ -143,6 +148,29 @@ def main():
                     def normalized_term(text):
                         return [normalizad_word_dict[term] if term in normalizad_word_dict else term for term in text]
 
+                    def Case_Folding(text):
+                        istStopwords = set(stopwords.words('indonesian'))
+                        filtered = []
+                        for txt in text:
+                            if txt not in listStopwords:
+                                filtered.append(txt)
+                        text = filtered 
+                        
+                        #menghapus link
+                        text = re.sub(r'''(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))''', " ", text)
+                        # Menghapus Tanda Baca
+                        text = re.sub(r'[^\w]|_',' ', text)
+                        # Hapus non-ascii
+                        text = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode('utf-8', 'ignore')
+
+                        # Menghapus Angka
+                        text = re.sub(r"\S*\d\S*", "", text).strip()
+                        text = re.sub(r"\b\d+\b", " ", text)
+
+                        # Menghapus white space
+                        text = re.sub(r'[\s]+', ' ', text)
+                        return text
+
                     # Filltering | stopwords removal
                     def stopword(text):
                         listStopwords = set(stopwords.words('indonesian'))
@@ -173,10 +201,10 @@ def main():
                     df['cleansing'] = df['content'].apply(cleansing)
 
                     st.caption("| case folding...")
-                    df['cleansing'] = df['cleansing'].apply(casefolding)
+                    df['case_folding'] = df['cleansing'].apply(casefolding)
 
                     st.caption("| tokenizing...")
-                    df['text_tokenize'] = df['cleansing'].apply(tokenize)
+                    df['text_tokenize'] = df['case_folding'].apply(tokenize)
 
                     st.caption("| normalization...")
                     df['tweet_normalized'] = df['text_tokenize'].apply(normalized_term)
